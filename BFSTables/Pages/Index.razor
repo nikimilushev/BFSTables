@@ -4,7 +4,7 @@
 @using BFSDomain
 @inject BFSDataService dataService
 
-<select value="@Value" @onchange="OnValueChanged">
+<select value="@Value" @onchange="OnValueChanged" class="custom-select custom-select-lg mb-3">
     <option value="">Изберете група...</option>
 
     <option value="2009A">Футбол 11 - 2009 A</option>
@@ -31,10 +31,17 @@
     <option value="2013B">Футбол 5 - 2013 Б</option>
 </select>
 
-@if (Table != null)
+@if (Table == null)
 {
-    <table class="table">
-        <thead>
+    if (inProgress)
+    {
+        <div class="loader">Loading...</div>
+    }
+}
+else
+{
+    <table class="table table-sm table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>Team</th>
                 <th>Played</th>
@@ -64,12 +71,17 @@
 @code {
     private Table Table;
     private string Value;
+    private bool inProgress;
 
-    private void OnValueChanged(ChangeEventArgs args)
+    private async Task OnValueChanged(ChangeEventArgs args)
     {
+        inProgress = true;
+        Table = null;
+        StateHasChanged();
+
         if (args.Value != null)
         {
-            Table = dataService.GetData(args.Value.ToString());
+            Table = await dataService.GetDataAsync(args.Value.ToString());
         }
     }
 }

@@ -37,7 +37,7 @@ namespace BFSTables.Data
         };
         const string urlFormat = "http://zs-sofia.com/football_result/football_result/program/{0}/custom/round/";
 
-        public Table GetData(string groupId)
+        public async Task<Table> GetDataAsync(string groupId)
         {
             var season = new HalfSeason();
             var url = string.Format(urlFormat, GroupsByUrlSegment[groupId]);
@@ -47,7 +47,8 @@ namespace BFSTables.Data
                 var round = new Round();
 
                 var web = new HtmlWeb();
-                var doc = web.LoadFromWebAsync(url + i.ToString(), Encoding.UTF8).GetAwaiter().GetResult();
+                var doc = await web.LoadFromWebAsync(url + i.ToString(), Encoding.UTF8);
+                //var doc = web.LoadFromWebAsync(url + i.ToString(), Encoding.UTF8).ConfigureAwait(false).GetAwaiter().GetResult();
                 var rows = doc.DocumentNode.SelectNodes("//table/tbody/tr");
                 if (rows != null)
                 {
