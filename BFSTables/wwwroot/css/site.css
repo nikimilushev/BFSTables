@@ -112,3 +112,14 @@ a, .btn-link {
         height: 5em;
     }
 }
+
+.tableFixHead {
+    overflow: auto;
+    height: 100px;
+}
+
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
