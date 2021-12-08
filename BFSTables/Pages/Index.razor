@@ -43,21 +43,30 @@ else
     <table class="table table-sm table-striped">
         <thead class="thead-dark">
             <tr>
-                <th>Team</th>
-                <th>Played</th>
-                <th>Won</th>
-                <th>Drawn</th>
-                <th>Lost</th>
-                <th>GF</th>
-                <th>GA</th>
-                <th>GD</th>
-                <th>Points</th>
+                <th>Място</th>
+                <th>Отбор</th>
+                <th>Срещи</th>
+                <th>Победи</th>
+                <th>Равенства</th>
+                <th>Загуби</th>
+                <th>ВГ</th>
+                <th>ДГ</th>
+                <th>ГР</th>
+                <th>Точки</th>
             </tr>
         </thead>
         <tbody>
+            @{
+                int place = 0;
+            }
+
             @foreach (var row in Table.Rows)
             {
                 <tr>
+                    @{
+                        place++;
+                    }
+                    <td>@place</td>
                     @foreach (var col in row.Columns)
                     {
                         <td>@col</td>
